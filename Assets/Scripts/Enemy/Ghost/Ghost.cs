@@ -1,0 +1,314 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ghost : MonoBehaviour
+{
+    public int health;
+    public GameObject damage;
+    public GameObject CurrentRoom;
+    public Animator animator;
+    public GameObject heart;
+    public GameObject damageEffect;
+
+
+    ////////////////////////////////////////////
+    ///PlayerAware values                    ///
+    ////////////////////////////////////////////
+    private Transform aim;
+    private GameObject aimTarget;
+    public bool AwareOfPlayer { get; private set; }
+    public Vector2 DirectionToPlayer { get; private set; }
+    [SerializeField]
+    public float playerAwarenessDistance;
+    private GameObject playertarget;
+
+    /////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////
+    ///GoopMovement values                   ///
+    ////////////////////////////////////////////
+    public Transform player;
+    public GameObject dumbplayer;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    //private float rotationSpeed = 100;
+    public Rigidbody2D rigidbody;
+    //private PlayerAware ThisPlayerAware;
+    private Vector2 targetdirection;
+    public GameObject sprite;
+    public GameObject anchor;
+
+    ////////////////////////////////////////////
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        ////////////////////////////////////////
+        ///PlayerAware Code
+        ////////////////////////////////////////
+        playertarget = GameObject.Find("Aim");
+        //print(playertarget);
+        player = playertarget.transform;
+
+
+        /////////////////////////////////////////
+        ///GoopMovement Code
+        /////////////////////////////////////////
+        ///print("awake");
+        dumbplayer = GameObject.Find("Player");
+        player = dumbplayer.transform;
+        anchor = GameObject.Find("EnemyAnchor");
+        rigidbody = GetComponent<Rigidbody2D>();
+        //ThisPlayerAware = GetComponent<PlayerAware>();
+
+
+
+        speed = 4f;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 enemyToPlayerVector = player.position - transform.position;
+        DirectionToPlayer = enemyToPlayerVector;
+
+        //print(enemyToPlayerVector);
+        //print(enemyToPlayerVector.magnitude);
+        
+        
+
+        if (enemyToPlayerVector.magnitude <= playerAwarenessDistance)
+        {
+            //print("Found player");
+            AwareOfPlayer = true;
+        }
+        else
+        {
+            //print("Lost player");
+            AwareOfPlayer = false;
+        }
+    }
+
+
+    ///////////////////////////////////////////////
+    ///Damage check
+    ///////////////////////////////////////////////
+
+    public void HurtMe(int damage)
+    {
+        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
+
+        health -= damage;
+        if (health <= 0)
+        {
+            int heartOrNo = Random.Range(0, 4);
+
+            print(heartOrNo);
+            //Instantiate (heart, this.transform.position, Quaternion.identity);
+
+            if (heartOrNo >= 2)
+            {
+                Instantiate(heart, this.transform.position, Quaternion.identity);
+            }
+
+            Destroy(this.gameObject);
+            CurrentRoom.gameObject.SendMessage("RoomClear");
+        }
+    }
+
+
+    public void LightningHurtMe(int ouchie)
+    {
+        health -= ouchie + 1;
+        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
+
+        if (health <= 0)
+        {
+            int heartOrNo = Random.Range(0, 4);
+
+            print(heartOrNo);
+            //Instantiate (heart, this.transform.position, Quaternion.identity);
+
+            if (heartOrNo >= 2)
+            {
+                Instantiate(heart, this.transform.position, Quaternion.identity);
+            }
+
+            Destroy(this.gameObject);
+            CurrentRoom.gameObject.SendMessage("RoomClear");
+        }
+    }
+
+    public void FireHurtMe(int ouchie)
+    {
+        health -= ouchie;
+        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
+
+        if (health <= 0)
+        {
+            int heartOrNo = Random.Range(0, 4);
+
+            print(heartOrNo);
+            //Instantiate (heart, this.transform.position, Quaternion.identity);
+
+            if (heartOrNo >= 2)
+            {
+                Instantiate(heart, this.transform.position, Quaternion.identity);
+            }
+
+            Destroy(this.gameObject);
+            CurrentRoom.gameObject.SendMessage("RoomClear");
+        }
+    }
+
+    public void IceHurtMe(int ouchie)
+    {
+        health -= ouchie;
+        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
+
+        if (health <= 0)
+        {
+            int heartOrNo = Random.Range(0, 4);
+
+            print(heartOrNo);
+            //Instantiate (heart, this.transform.position, Quaternion.identity);
+
+            if (heartOrNo >= 2)
+            {
+                Instantiate(heart, this.transform.position, Quaternion.identity);
+            }
+
+            Destroy(this.gameObject);
+            CurrentRoom.gameObject.SendMessage("RoomClear");
+        }
+    }
+
+    public void EarthHurtMe(int ouchie)
+    {
+
+        if (health <= 0)
+        {
+            int heartOrNo = Random.Range(0, 4);
+
+            print(heartOrNo);
+            //Instantiate (heart, this.transform.position, Quaternion.identity);
+
+            if (heartOrNo >= 2)
+            {
+                Instantiate(heart, this.transform.position, Quaternion.identity);
+            }
+
+            Destroy(this.gameObject);
+            CurrentRoom.gameObject.SendMessage("RoomClear");
+        }
+    }
+
+    public void OnTriggerEnter2D( Collider2D other)
+    {
+        
+        if(other.gameObject.CompareTag("Fire"))
+        { 
+            Destroy(other.gameObject);
+            HurtMe(1);
+            GameObject explo = Instantiate(damage, this.transform.position, Quaternion.identity);
+            Destroy(explo, 1f);
+            
+            
+        }
+        if(other.gameObject.CompareTag("FILLERTEXT"))
+        { 
+                        
+            if(health <= 0)
+                {  
+                    Destroy(this.gameObject);   
+                }
+        }
+        if(other.gameObject.CompareTag("Earth"))
+        {
+
+        }
+        if(other.gameObject.CompareTag("Lightning"))
+        {
+            Destroy(other.gameObject);     
+        }
+        if(other.gameObject.CompareTag("Ice"))
+        {
+            Destroy(other.gameObject);     
+        }
+
+        if(other.gameObject.CompareTag("Player"))
+        {
+           
+            
+            animator.Play("GoopAttack");
+            
+            //other.gameObject.SendMessage("EnemyCollide");
+            
+
+        }
+    }
+
+    void FixedUpdate()
+    {
+        UpdateTargetDirection();
+        RotateTowardsTarget();
+        SetVelocity();
+        sprite.transform.rotation = anchor.transform.rotation;
+        
+    }
+
+    private void UpdateTargetDirection()
+    {
+        //print("UpdateTargetDirection");
+        if (AwareOfPlayer)
+        {
+            targetdirection = DirectionToPlayer;
+        }
+        else
+        {
+            targetdirection = Vector2.zero;
+        }
+        //print("target direction = " + targetdirection);
+
+    }
+
+    private void RotateTowardsTarget()
+    {
+        //print("RotateTowardsTarget");
+        if (targetdirection == Vector2.zero)
+        {
+            //print("targetdirection == Vector2.zero");
+            return;
+        }
+
+        // Quaternion targetRotation = Quaternion.LookRotation(transform.foward, targetdirection);
+        //Quaternion rotation = Quaternion.RotateTowards(player.transform.rotation, targetdirection, rotationSpeed* Time.deltaTime);
+        //rigidbody.transform.rotation = player.transform.rotation;
+        rigidbody.transform.rotation = sprite.transform.rotation;
+    }
+
+    private void SetVelocity()
+    {
+        //print("SetVelocity");
+        if (targetdirection == Vector2.zero)
+        {
+            //print("no direction");
+            this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            
+        }
+        else
+        {
+            this.GetComponent<Rigidbody2D>().velocity = transform.up * speed;
+            //this.GetComponent<Rigidbody2D>().AddForce(transform.up * speed);
+            //print("transform.up = " + this.transform.up);
+            //print("transform.up = " + transform.up);
+            //print("speed = " + speed);
+           // print("velocty = " + this.GetComponent<Rigidbody2D>().velocity);
+            //print("velocty should be = " + transform.up * speed);
+        }
+    }
+}

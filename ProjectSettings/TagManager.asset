@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Fire
+  - FILLERTEXT
+  - Enemy
+  - EnemyProjectile
+  - Wall
+  - Earth
+  - Lightning
+  - Ice
+  - IceWall
+  - Puddle
+  - EarthWall
+  - BigLightning
+  - BigFire
+  - SceneLoader
+  - HealthPowerUp
+  - WorldController
+  - BossLvl
+  - HydraBoss
+  - HydraTrigger
+  - YouWin
+  - EventSystem
+  - GameManager
+  - EnemyFire
+  - EnemyIce
+  - EnemyEarth
+  - EnemyLightning
+  - LightningEnemy
+  - VirtualCamera
+  - Tutorial
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Enemy
+  - Water
+  - UI
+  - Wall
+  - Lightning
+  - Post Processing
+  - Player
+  - IgnorePlayer
+  - Ice
+  - Fire
+  - Earth
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

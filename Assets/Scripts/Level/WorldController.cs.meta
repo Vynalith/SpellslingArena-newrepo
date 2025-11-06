@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 627838eb320e862428747db98ffa6b52
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - destroy: {fileID: 8001152008552254305, guid: 35f461400a6084e4e99a7708be87385b, type: 3}
+  - player: {fileID: 6145601598086864364, guid: 84706210821d83f4c9b2bdd02df4c440, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
