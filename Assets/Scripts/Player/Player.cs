@@ -9,12 +9,12 @@ public class PlayerController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 move;
-    private SpellSlingInputs input;
+    private SpellInputs input;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        input = new SpellSlingInputs();
+        input = new SpellInputs();
     }
 
     private void OnEnable()

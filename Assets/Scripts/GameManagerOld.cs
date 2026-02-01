@@ -1,9 +1,8 @@
-@ -1,136 +0,0 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManagerOld : MonoBehaviour
 {
 
     public int roomCount;

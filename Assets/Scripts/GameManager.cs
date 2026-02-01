@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DungeonGenManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [Header("Placers (assign in Inspector in order)")]
     [SerializeField] private RoomPlacer[] placers; // e.g., size 6
