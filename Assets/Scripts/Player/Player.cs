@@ -9,7 +9,7 @@ public class PlayerController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 move;
-    private SpellInputs input;
+    private InputAction SpellInputs;
 
     private void Awake()
     {
@@ -21,6 +21,11 @@ public class PlayerController2D : MonoBehaviour
     {
         input.Enable();
 
+        // Movement
+        input.Player.Move.performed += OnMove;
+        input.Player.Move.canceled += OnMove;
+
+        // Actions
         input.Player.Fire.performed += OnFire;
         input.Player.AltFire.performed += OnAltFire;
         input.Player.Pause.performed += OnPause;
@@ -28,6 +33,9 @@ public class PlayerController2D : MonoBehaviour
 
     private void OnDisable()
     {
+        input.Player.Move.performed -= OnMove;
+        input.Player.Move.canceled -= OnMove;
+
         input.Player.Fire.performed -= OnFire;
         input.Player.AltFire.performed -= OnAltFire;
         input.Player.Pause.performed -= OnPause;
@@ -35,19 +43,18 @@ public class PlayerController2D : MonoBehaviour
         input.Disable();
     }
 
-    private void Update()
-    {
-        move = input.Player.Move.ReadValue<Vector2>().normalized;
-    }
-
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
     }
 
+    private void OnMove(InputAction.CallbackContext ctx)
+    {
+        move = ctx.ReadValue<Vector2>().normalized;
+    }
+
     private void OnFire(InputAction.CallbackContext ctx)
     {
-        // Call your spell system here
         // spellCaster.CastPrimary();
     }
 
