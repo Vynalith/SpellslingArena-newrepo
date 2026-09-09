@@ -79,3 +79,5 @@ Assets/NavMesh Stuff/NavMeshComponents/Navmesh_Scripts.zip.meta
 
 # Ignore local burst debug text inside your build path
 ProjectBuilds/**/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_Data/Managed/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll
