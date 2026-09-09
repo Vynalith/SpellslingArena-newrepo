@@ -10,22 +10,23 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Zeta98159"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Zeta98159&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Vynalith/SpellslingArena-newrepo.git",
-    "accountId": "e0204b16-d9b3-4965-a549-ff8ee9e8d2c6"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Vynalith/SpellslingArena-newrepo.git&quot;,
+    &quot;accountId&quot;: &quot;e0204b16-d9b3-4965-a549-ff8ee9e8d2c6&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6,
-  "fromUser": false
-}]]></component>
+}</component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3J6JRkoM9jXxmM8V72pg5N8yUQG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -37,6 +38,13 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
 }]]></component>
   <component name="TaskManager">
@@ -49,6 +57,7 @@
     </task>
     <servers />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityProjectDiscoverer">
     <option name="unityProjectFolder" value="true" />
