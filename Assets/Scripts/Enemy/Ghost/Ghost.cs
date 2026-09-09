@@ -14,11 +14,10 @@ public class Ghost : MonoBehaviour
     ///PlayerAware values                    ///
     ////////////////////////////////////////////
     private Transform aim;
-    private GameObject aimTarget;
-    public bool AwareOfPlayer { get; private set; }
+    public bool Player { get; private set; }
     public Vector2 DirectionToPlayer { get; private set; }
     [SerializeField]
-    public float playerAwarenessDistance;
+    public float AwareofPlayer;
     private GameObject playertarget;
 
     /////////////////////////////////////////////
@@ -28,7 +27,7 @@ public class Ghost : MonoBehaviour
     ///GoopMovement values                   ///
     ////////////////////////////////////////////
     public Transform player;
-    public GameObject dumbplayer;
+    public GameObject enemy;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -36,7 +35,7 @@ public class Ghost : MonoBehaviour
     public Rigidbody2D rigidbody;
     //private PlayerAware ThisPlayerAware;
     private Vector2 targetdirection;
-    public GameObject sprite;
+    public GameObject Goop;
     public GameObject anchor;
 
     ////////////////////////////////////////////
@@ -44,11 +43,10 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ////////////////////////////////////////
         ///PlayerAware Code
         ////////////////////////////////////////
-        playertarget = GameObject.Find("Aim");
+        playertarget = GameObject.Find("target");
         //print(playertarget);
         player = playertarget.transform;
 
@@ -57,14 +55,12 @@ public class Ghost : MonoBehaviour
         ///GoopMovement Code
         /////////////////////////////////////////
         ///print("awake");
-        dumbplayer = GameObject.Find("Player");
-        player = dumbplayer.transform;
+        player = GameObject.Find("Player");
+        player = player.transform;
         anchor = GameObject.Find("EnemyAnchor");
         rigidbody = GetComponent<Rigidbody2D>();
         //ThisPlayerAware = GetComponent<PlayerAware>();
-
-
-
+        
         speed = 4f;
     }
 
@@ -77,8 +73,6 @@ public class Ghost : MonoBehaviour
         //print(enemyToPlayerVector);
         //print(enemyToPlayerVector.magnitude);
         
-        
-
         if (enemyToPlayerVector.magnitude <= playerAwarenessDistance)
         {
             //print("Found player");
@@ -93,7 +87,7 @@ public class Ghost : MonoBehaviour
 
 
     ///////////////////////////////////////////////
-    ///Damage check
+    /// player Damage check
     ///////////////////////////////////////////////
 
     public void HurtMe(int damage)
