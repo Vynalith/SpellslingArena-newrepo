@@ -1,0 +1,490 @@
+Index: ../../Player/Player.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using UnityEngine;\r\nusing UnityEngine.InputSystem;\r\n\r\n[RequireComponent(typeof(Rigidbody2D))]\r\npublic class PlayerController2D : MonoBehaviour\r\n{\r\n    [Header(\"Movement\")]\r\n    [SerializeField] private float moveSpeed = 6f;\r\n\r\n    private Rigidbody2D rb;\r\n    private Vector2 move;\r\n    private InputAction SpellInputs;\r\n\r\n    private void Awake()\r\n    {\r\n        rb = GetComponent<Rigidbody2D>();\r\n        input = new SpellInputs();\r\n    }\r\n\r\n    private void OnEnable()\r\n    {\r\n        input.Enable();\r\n\r\n        // Movement\r\n        input.Player.Move.performed += OnMove;\r\n        input.Player.Move.canceled += OnMove;\r\n\r\n        // Actions\r\n        input.Player.Fire.performed += OnFire;\r\n        input.Player.AltFire.performed += OnAltFire;\r\n        input.Player.Pause.performed += OnPause;\r\n    }\r\n\r\n    private void OnDisable()\r\n    {\r\n        input.Player.Move.performed -= OnMove;\r\n        input.Player.Move.canceled -= OnMove;\r\n\r\n        input.Player.Fire.performed -= OnFire;\r\n        input.Player.AltFire.performed -= OnAltFire;\r\n        input.Player.Pause.performed -= OnPause;\r\n\r\n        input.Disable();\r\n    }\r\n\r\n    private void FixedUpdate()\r\n    {\r\n        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);\r\n    }\r\n\r\n    private void OnMove(InputAction.CallbackContext ctx)\r\n    {\r\n        move = ctx.ReadValue<Vector2>().normalized;\r\n    }\r\n\r\n    private void OnFire(InputAction.CallbackContext ctx)\r\n    {\r\n        // spellCaster.CastPrimary();\r\n    }\r\n\r\n    private void OnAltFire(InputAction.CallbackContext ctx)\r\n    {\r\n        // spellCaster.CastSecondary();\r\n    }\r\n\r\n    private void OnPause(InputAction.CallbackContext ctx)\r\n    {\r\n        // GameManager.Instance?.TogglePause();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Player/Player.cs b/../../Player/Player.cs
+--- a/../../Player/Player.cs	(revision df27ebb9fdb08348cefbc3f69cf5111965cabf30)
++++ b/../../Player/Player.cs	(date 1788974601117)
+@@ -1,5 +1,4 @@
+ using UnityEngine;
+-using UnityEngine.InputSystem;
+ 
+ [RequireComponent(typeof(Rigidbody2D))]
+ public class PlayerController2D : MonoBehaviour
+@@ -7,7 +6,7 @@
+     [Header("Movement")]
+     [SerializeField] private float moveSpeed = 6f;
+ 
+-    private Rigidbody2D rb;
++    public Rigidbody2D rb;
+     private Vector2 move;
+     private InputAction SpellInputs;
+ 
+@@ -68,3 +67,11 @@
+         // GameManager.Instance?.TogglePause();
+     }
+ }
++
++public class RequireComponentAttribute
++{
++    public RequireComponentAttribute(Type type)
++    {
++        throw new NotImplementedException();
++    }
++}
+\ No newline at end of file
+Index: .idea/indexLayout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/indexLayout.xml b/.idea/indexLayout.xml
+new file mode 100644
+--- /dev/null	(date 1788974351643)
++++ b/.idea/indexLayout.xml	(date 1788974351643)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="UserContentModel">
++    <attachedFolders />
++    <explicitIncludes />
++    <explicitExcludes />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../../../ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Library: lib_burst_generated\r\n--platform=Windows\r\n--backend=burst-llvm-11\r\n--target=X64_SSE2\r\n--global-safety-checks-setting=Off\r\n--dump=Function\r\n--float-precision=Standard\r\n--format=Coff\r\n--disable-warnings=BC1370\r\n--compilation-defines=UNITY_2021_3_4\r\n--compilation-defines=UNITY_2021_3\r\n--compilation-defines=UNITY_2021\r\n--compilation-defines=UNITY_5_3_OR_NEWER\r\n--compilation-defines=UNITY_5_4_OR_NEWER\r\n--compilation-defines=UNITY_5_5_OR_NEWER\r\n--compilation-defines=UNITY_5_6_OR_NEWER\r\n--compilation-defines=UNITY_2017_1_OR_NEWER\r\n--compilation-defines=UNITY_2017_2_OR_NEWER\r\n--compilation-defines=UNITY_2017_3_OR_NEWER\r\n--compilation-defines=UNITY_2017_4_OR_NEWER\r\n--compilation-defines=UNITY_2018_1_OR_NEWER\r\n--compilation-defines=UNITY_2018_2_OR_NEWER\r\n--compilation-defines=UNITY_2018_3_OR_NEWER\r\n--compilation-defines=UNITY_2018_4_OR_NEWER\r\n--compilation-defines=UNITY_2019_1_OR_NEWER\r\n--compilation-defines=UNITY_2019_2_OR_NEWER\r\n--compilation-defines=UNITY_2019_3_OR_NEWER\r\n--compilation-defines=UNITY_2019_4_OR_NEWER\r\n--compilation-defines=UNITY_2020_1_OR_NEWER\r\n--compilation-defines=UNITY_2020_2_OR_NEWER\r\n--compilation-defines=UNITY_2020_3_OR_NEWER\r\n--compilation-defines=UNITY_2021_1_OR_NEWER\r\n--compilation-defines=UNITY_2021_2_OR_NEWER\r\n--compilation-defines=UNITY_2021_3_OR_NEWER\r\n--compilation-defines=PLATFORM_ARCH_64\r\n--compilation-defines=UNITY_64\r\n--compilation-defines=USE_SEARCH_ENGINE_API\r\n--compilation-defines=USE_SEARCH_TABLE\r\n--compilation-defines=USE_SEARCH_MODULE\r\n--compilation-defines=USE_PROPERTY_DATABASE\r\n--compilation-defines=USE_SEARCH_EXTENSION_API\r\n--compilation-defines=SCENE_TEMPLATE_MODULE\r\n--compilation-defines=ENABLE_AR\r\n--compilation-defines=ENABLE_AUDIO\r\n--compilation-defines=ENABLE_CACHING\r\n--compilation-defines=ENABLE_CLOTH\r\n--compilation-defines=ENABLE_EVENT_QUEUE\r\n--compilation-defines=ENABLE_MICROPHONE\r\n--compilation-defines=ENABLE_MULTIPLE_DISPLAYS\r\n--compilation-defines=ENABLE_PHYSICS\r\n--compilation-defines=ENABLE_TEXTURE_STREAMING\r\n--compilation-defines=ENABLE_VIRTUALTEXTURING\r\n--compilation-defines=ENABLE_UNET\r\n--compilation-defines=ENABLE_LZMA\r\n--compilation-defines=ENABLE_UNITYEVENTS\r\n--compilation-defines=ENABLE_VR\r\n--compilation-defines=ENABLE_WEBCAM\r\n--compilation-defines=ENABLE_UNITYWEBREQUEST\r\n--compilation-defines=ENABLE_WWW\r\n--compilation-defines=ENABLE_CLOUD_SERVICES\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_ADS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_USE_WEBREQUEST\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_CRASH_REPORTING\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_PURCHASING\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_ANALYTICS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_UNET\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_BUILD\r\n--compilation-defines=ENABLE_CLOUD_LICENSE\r\n--compilation-defines=ENABLE_EDITOR_HUB_LICENSE\r\n--compilation-defines=ENABLE_WEBSOCKET_CLIENT\r\n--compilation-defines=ENABLE_DIRECTOR_AUDIO\r\n--compilation-defines=ENABLE_DIRECTOR_TEXTURE\r\n--compilation-defines=ENABLE_MANAGED_JOBS\r\n--compilation-defines=ENABLE_MANAGED_TRANSFORM_JOBS\r\n--compilation-defines=ENABLE_MANAGED_ANIMATION_JOBS\r\n--compilation-defines=ENABLE_MANAGED_AUDIO_JOBS\r\n--compilation-defines=ENABLE_MANAGED_UNITYTLS\r\n--compilation-defines=INCLUDE_DYNAMIC_GI\r\n--compilation-defines=ENABLE_SCRIPTING_GC_WBARRIERS\r\n--compilation-defines=PLATFORM_SUPPORTS_MONO\r\n--compilation-defines=RENDER_SOFTWARE_CURSOR\r\n--compilation-defines=ENABLE_VIDEO\r\n--compilation-defines=ENABLE_ACCELERATOR_CLIENT_DEBUGGING\r\n--compilation-defines=PLATFORM_STANDALONE\r\n--compilation-defines=TEXTCORE_1_0_OR_NEWER\r\n--compilation-defines=PLATFORM_STANDALONE_WIN\r\n--compilation-defines=UNITY_STANDALONE_WIN\r\n--compilation-defines=UNITY_STANDALONE\r\n--compilation-defines=ENABLE_RUNTIME_GI\r\n--compilation-defines=ENABLE_MOVIES\r\n--compilation-defines=ENABLE_NETWORK\r\n--compilation-defines=ENABLE_NVIDIA\r\n--compilation-defines=ENABLE_CRUNCH_TEXTURE_COMPRESSION\r\n--compilation-defines=ENABLE_OUT_OF_PROCESS_CRASH_HANDLER\r\n--compilation-defines=ENABLE_CLUSTER_SYNC\r\n--compilation-defines=ENABLE_CLUSTERINPUT\r\n--compilation-defines=PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP\r\n--compilation-defines=GFXDEVICE_WAITFOREVENT_MESSAGEPUMP\r\n--compilation-defines=ENABLE_WEBSOCKET_HOST\r\n--compilation-defines=ENABLE_MONO\r\n--compilation-defines=NET_STANDARD_2_0\r\n--compilation-defines=NET_STANDARD\r\n--compilation-defines=UNITY_PRO_LICENSE\r\n--compilation-defines=ENABLE_CUSTOM_RENDER_TEXTURE\r\n--compilation-defines=ENABLE_DIRECTOR\r\n--compilation-defines=ENABLE_LOCALIZATION\r\n--compilation-defines=ENABLE_SPRITES\r\n--compilation-defines=ENABLE_TERRAIN\r\n--compilation-defines=ENABLE_TILEMAP\r\n--compilation-defines=ENABLE_TIMELINE\r\n--compilation-defines=ENABLE_LEGACY_INPUT_MANAGER\r\n--compilation-defines=PACKAGE_PHYSICS\r\n--compilation-defines=PACKAGE_PHYSICS2D\r\n--compilation-defines=PACKAGE_TILEMAP\r\n--compilation-defines=PACKAGE_ANIMATION\r\n--compilation-defines=PACKAGE_UITOOLKIT\r\n--compilation-defines=CSHARP_7_OR_LATER\r\n--compilation-defines=CSHARP_7_3_OR_NEWER\r\n--compilation-defines=MODULE_AI_EXISTS\r\n--compilation-defines=MODULE_ANIMATION_EXISTS\r\n--compilation-defines=MODULE_PHYSICS_EXISTS\r\n--compilation-defines=MODULE_PHYSICS_2D_EXISTS\r\n--compilation-defines=MODULE_PARTICLE_SYSTEM_EXISTS\r\n--compilation-defines=ENABLE_ANIMATION_BURST\r\n--compilation-defines=CINEMACHINE_TIMELINE\r\n--compilation-defines=CINEMACHINE_PHYSICS_2D\r\n--compilation-defines=CINEMACHINE_PHYSICS\r\n--compilation-defines=CINEMACHINE_UGUI\r\n--compilation-defines=CINEMACHINE_PIXEL_PERFECT_2_0_3\r\n--compilation-defines=CINEMACHINE_UNITY_ANIMATION\r\n--compilation-defines=CINEMACHINE_UNITY_IMGUI\r\n--compilation-defines=TIMELINE_FRAMEACCURATE\r\n--compilation-defines=IS_TERRAIN_USED\r\n--compilation-defines=ENABLE_SPRITESHAPE_BURST\r\n--linker-options=PdbAltPath=\"MageSlinger_Data/Plugins/x86_64\"\r\n--generate-link-xml=Temp\\burst.link.xml\r\n--output=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Plugins\\x86_64\\lib_burst_generated\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\UnityEngine.UI.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.Flow.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Mathematics.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.CloudSave.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Telemetry.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.State.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.Core.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Authentication.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Environments.Internal.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Burst.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Animation.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.TextMeshPro.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Assembly-CSharp.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Cinemachine.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Timeline.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\NavMeshPlus.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.CloudCode.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Environments.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Internal.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Analytics.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.SpriteShape.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Scheduler.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Registration.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.PixelPerfect.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Common.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.IK.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Device.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Threading.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Tilemap.Extras.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Networking.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.InternalAPIEngineBridge.001.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Configuration.dll\r\n--assembly-folder=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\\r\n--pdb-search-paths=Temp/ManagedSymbols/\r\n--method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10\r\n--method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoSetCSRTrampoline(System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--da352d92cabf024fc9986011d52a4537\r\n--method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoGetCSRTrampoline()--89425a97f3f500fa810ad03f0c382542\r\n--method=Unity.Jobs.IJobExtensions+JobStruct`1[[UnityEngine.U2D.SpriteShapeGenerator, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.U2D.SpriteShapeGenerator&, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a185c62eba2497c95197140e5282b27a\r\n--platform=Windows\r\n--backend=burst-llvm-11\r\n--target=AVX2\r\n--global-safety-checks-setting=Off\r\n--dump=Function\r\n--float-precision=Standard\r\n--format=Coff\r\n--disable-warnings=BC1370\r\n--compilation-defines=UNITY_2021_3_4\r\n--compilation-defines=UNITY_2021_3\r\n--compilation-defines=UNITY_2021\r\n--compilation-defines=UNITY_5_3_OR_NEWER\r\n--compilation-defines=UNITY_5_4_OR_NEWER\r\n--compilation-defines=UNITY_5_5_OR_NEWER\r\n--compilation-defines=UNITY_5_6_OR_NEWER\r\n--compilation-defines=UNITY_2017_1_OR_NEWER\r\n--compilation-defines=UNITY_2017_2_OR_NEWER\r\n--compilation-defines=UNITY_2017_3_OR_NEWER\r\n--compilation-defines=UNITY_2017_4_OR_NEWER\r\n--compilation-defines=UNITY_2018_1_OR_NEWER\r\n--compilation-defines=UNITY_2018_2_OR_NEWER\r\n--compilation-defines=UNITY_2018_3_OR_NEWER\r\n--compilation-defines=UNITY_2018_4_OR_NEWER\r\n--compilation-defines=UNITY_2019_1_OR_NEWER\r\n--compilation-defines=UNITY_2019_2_OR_NEWER\r\n--compilation-defines=UNITY_2019_3_OR_NEWER\r\n--compilation-defines=UNITY_2019_4_OR_NEWER\r\n--compilation-defines=UNITY_2020_1_OR_NEWER\r\n--compilation-defines=UNITY_2020_2_OR_NEWER\r\n--compilation-defines=UNITY_2020_3_OR_NEWER\r\n--compilation-defines=UNITY_2021_1_OR_NEWER\r\n--compilation-defines=UNITY_2021_2_OR_NEWER\r\n--compilation-defines=UNITY_2021_3_OR_NEWER\r\n--compilation-defines=PLATFORM_ARCH_64\r\n--compilation-defines=UNITY_64\r\n--compilation-defines=USE_SEARCH_ENGINE_API\r\n--compilation-defines=USE_SEARCH_TABLE\r\n--compilation-defines=USE_SEARCH_MODULE\r\n--compilation-defines=USE_PROPERTY_DATABASE\r\n--compilation-defines=USE_SEARCH_EXTENSION_API\r\n--compilation-defines=SCENE_TEMPLATE_MODULE\r\n--compilation-defines=ENABLE_AR\r\n--compilation-defines=ENABLE_AUDIO\r\n--compilation-defines=ENABLE_CACHING\r\n--compilation-defines=ENABLE_CLOTH\r\n--compilation-defines=ENABLE_EVENT_QUEUE\r\n--compilation-defines=ENABLE_MICROPHONE\r\n--compilation-defines=ENABLE_MULTIPLE_DISPLAYS\r\n--compilation-defines=ENABLE_PHYSICS\r\n--compilation-defines=ENABLE_TEXTURE_STREAMING\r\n--compilation-defines=ENABLE_VIRTUALTEXTURING\r\n--compilation-defines=ENABLE_UNET\r\n--compilation-defines=ENABLE_LZMA\r\n--compilation-defines=ENABLE_UNITYEVENTS\r\n--compilation-defines=ENABLE_VR\r\n--compilation-defines=ENABLE_WEBCAM\r\n--compilation-defines=ENABLE_UNITYWEBREQUEST\r\n--compilation-defines=ENABLE_WWW\r\n--compilation-defines=ENABLE_CLOUD_SERVICES\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_ADS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_USE_WEBREQUEST\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_CRASH_REPORTING\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_PURCHASING\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_ANALYTICS\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_UNET\r\n--compilation-defines=ENABLE_CLOUD_SERVICES_BUILD\r\n--compilation-defines=ENABLE_CLOUD_LICENSE\r\n--compilation-defines=ENABLE_EDITOR_HUB_LICENSE\r\n--compilation-defines=ENABLE_WEBSOCKET_CLIENT\r\n--compilation-defines=ENABLE_DIRECTOR_AUDIO\r\n--compilation-defines=ENABLE_DIRECTOR_TEXTURE\r\n--compilation-defines=ENABLE_MANAGED_JOBS\r\n--compilation-defines=ENABLE_MANAGED_TRANSFORM_JOBS\r\n--compilation-defines=ENABLE_MANAGED_ANIMATION_JOBS\r\n--compilation-defines=ENABLE_MANAGED_AUDIO_JOBS\r\n--compilation-defines=ENABLE_MANAGED_UNITYTLS\r\n--compilation-defines=INCLUDE_DYNAMIC_GI\r\n--compilation-defines=ENABLE_SCRIPTING_GC_WBARRIERS\r\n--compilation-defines=PLATFORM_SUPPORTS_MONO\r\n--compilation-defines=RENDER_SOFTWARE_CURSOR\r\n--compilation-defines=ENABLE_VIDEO\r\n--compilation-defines=ENABLE_ACCELERATOR_CLIENT_DEBUGGING\r\n--compilation-defines=PLATFORM_STANDALONE\r\n--compilation-defines=TEXTCORE_1_0_OR_NEWER\r\n--compilation-defines=PLATFORM_STANDALONE_WIN\r\n--compilation-defines=UNITY_STANDALONE_WIN\r\n--compilation-defines=UNITY_STANDALONE\r\n--compilation-defines=ENABLE_RUNTIME_GI\r\n--compilation-defines=ENABLE_MOVIES\r\n--compilation-defines=ENABLE_NETWORK\r\n--compilation-defines=ENABLE_NVIDIA\r\n--compilation-defines=ENABLE_CRUNCH_TEXTURE_COMPRESSION\r\n--compilation-defines=ENABLE_OUT_OF_PROCESS_CRASH_HANDLER\r\n--compilation-defines=ENABLE_CLUSTER_SYNC\r\n--compilation-defines=ENABLE_CLUSTERINPUT\r\n--compilation-defines=PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP\r\n--compilation-defines=GFXDEVICE_WAITFOREVENT_MESSAGEPUMP\r\n--compilation-defines=ENABLE_WEBSOCKET_HOST\r\n--compilation-defines=ENABLE_MONO\r\n--compilation-defines=NET_STANDARD_2_0\r\n--compilation-defines=NET_STANDARD\r\n--compilation-defines=UNITY_PRO_LICENSE\r\n--compilation-defines=ENABLE_CUSTOM_RENDER_TEXTURE\r\n--compilation-defines=ENABLE_DIRECTOR\r\n--compilation-defines=ENABLE_LOCALIZATION\r\n--compilation-defines=ENABLE_SPRITES\r\n--compilation-defines=ENABLE_TERRAIN\r\n--compilation-defines=ENABLE_TILEMAP\r\n--compilation-defines=ENABLE_TIMELINE\r\n--compilation-defines=ENABLE_LEGACY_INPUT_MANAGER\r\n--compilation-defines=PACKAGE_PHYSICS\r\n--compilation-defines=PACKAGE_PHYSICS2D\r\n--compilation-defines=PACKAGE_TILEMAP\r\n--compilation-defines=PACKAGE_ANIMATION\r\n--compilation-defines=PACKAGE_UITOOLKIT\r\n--compilation-defines=CSHARP_7_OR_LATER\r\n--compilation-defines=CSHARP_7_3_OR_NEWER\r\n--compilation-defines=MODULE_AI_EXISTS\r\n--compilation-defines=MODULE_ANIMATION_EXISTS\r\n--compilation-defines=MODULE_PHYSICS_EXISTS\r\n--compilation-defines=MODULE_PHYSICS_2D_EXISTS\r\n--compilation-defines=MODULE_PARTICLE_SYSTEM_EXISTS\r\n--compilation-defines=ENABLE_ANIMATION_BURST\r\n--compilation-defines=CINEMACHINE_TIMELINE\r\n--compilation-defines=CINEMACHINE_PHYSICS_2D\r\n--compilation-defines=CINEMACHINE_PHYSICS\r\n--compilation-defines=CINEMACHINE_UGUI\r\n--compilation-defines=CINEMACHINE_PIXEL_PERFECT_2_0_3\r\n--compilation-defines=CINEMACHINE_UNITY_ANIMATION\r\n--compilation-defines=CINEMACHINE_UNITY_IMGUI\r\n--compilation-defines=TIMELINE_FRAMEACCURATE\r\n--compilation-defines=IS_TERRAIN_USED\r\n--compilation-defines=ENABLE_SPRITESHAPE_BURST\r\n--linker-options=PdbAltPath=\"MageSlinger_Data/Plugins/x86_64\"\r\n--generate-link-xml=Temp\\burst.link.xml\r\n--output=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Plugins\\x86_64\\lib_burst_generated\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\UnityEngine.UI.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.Flow.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Mathematics.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.CloudSave.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Telemetry.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.State.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.VisualScripting.Core.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Authentication.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Environments.Internal.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Burst.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Animation.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.TextMeshPro.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Assembly-CSharp.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Cinemachine.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Timeline.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\NavMeshPlus.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.CloudCode.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Environments.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Internal.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Analytics.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.SpriteShape.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Scheduler.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Registration.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.PixelPerfect.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Common.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.IK.Runtime.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Device.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Threading.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.2D.Tilemap.Extras.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Networking.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.InternalAPIEngineBridge.001.dll\r\n--root-assembly=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\Unity.Services.Core.Configuration.dll\r\n--assembly-folder=D:\\IUPUI\\IU unityhub\\Spellsling-Arena\\Temp\\StagingArea\\Data\\Managed\\\r\n--pdb-search-paths=Temp/ManagedSymbols/\r\n--method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10\r\n--method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoSetCSRTrampoline(System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--da352d92cabf024fc9986011d52a4537\r\n--method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoGetCSRTrampoline()--89425a97f3f500fa810ad03f0c382542\r\n--method=Unity.Jobs.IJobExtensions+JobStruct`1[[UnityEngine.U2D.SpriteShapeGenerator, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.U2D.SpriteShapeGenerator&, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a185c62eba2497c95197140e5282b27a\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../../../ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt b/../../../../ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt
+--- a/../../../../ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt	(revision df27ebb9fdb08348cefbc3f69cf5111965cabf30)
++++ b/../../../../ProjectBuilds/Final SpellSling Arena Build 41923/SpellSling Arena AJ build 042423/MageSlinger_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt	(date 1769384105000)
+@@ -1,356 +1,0 @@
+-Library: lib_burst_generated
+---platform=Windows
+---backend=burst-llvm-11
+---target=X64_SSE2
+---global-safety-checks-setting=Off
+---dump=Function
+---float-precision=Standard
+---format=Coff
+---disable-warnings=BC1370
+---compilation-defines=UNITY_2021_3_4
+---compilation-defines=UNITY_2021_3
+---compilation-defines=UNITY_2021
+---compilation-defines=UNITY_5_3_OR_NEWER
+---compilation-defines=UNITY_5_4_OR_NEWER
+---compilation-defines=UNITY_5_5_OR_NEWER
+---compilation-defines=UNITY_5_6_OR_NEWER
+---compilation-defines=UNITY_2017_1_OR_NEWER
+---compilation-defines=UNITY_2017_2_OR_NEWER
+---compilation-defines=UNITY_2017_3_OR_NEWER
+---compilation-defines=UNITY_2017_4_OR_NEWER
+---compilation-defines=UNITY_2018_1_OR_NEWER
+---compilation-defines=UNITY_2018_2_OR_NEWER
+---compilation-defines=UNITY_2018_3_OR_NEWER
+---compilation-defines=UNITY_2018_4_OR_NEWER
+---compilation-defines=UNITY_2019_1_OR_NEWER
+---compilation-defines=UNITY_2019_2_OR_NEWER
+---compilation-defines=UNITY_2019_3_OR_NEWER
+---compilation-defines=UNITY_2019_4_OR_NEWER
+---compilation-defines=UNITY_2020_1_OR_NEWER
+---compilation-defines=UNITY_2020_2_OR_NEWER
+---compilation-defines=UNITY_2020_3_OR_NEWER
+---compilation-defines=UNITY_2021_1_OR_NEWER
+---compilation-defines=UNITY_2021_2_OR_NEWER
+---compilation-defines=UNITY_2021_3_OR_NEWER
+---compilation-defines=PLATFORM_ARCH_64
+---compilation-defines=UNITY_64
+---compilation-defines=USE_SEARCH_ENGINE_API
+---compilation-defines=USE_SEARCH_TABLE
+---compilation-defines=USE_SEARCH_MODULE
+---compilation-defines=USE_PROPERTY_DATABASE
+---compilation-defines=USE_SEARCH_EXTENSION_API
+---compilation-defines=SCENE_TEMPLATE_MODULE
+---compilation-defines=ENABLE_AR
+---compilation-defines=ENABLE_AUDIO
+---compilation-defines=ENABLE_CACHING
+---compilation-defines=ENABLE_CLOTH
+---compilation-defines=ENABLE_EVENT_QUEUE
+---compilation-defines=ENABLE_MICROPHONE
+---compilation-defines=ENABLE_MULTIPLE_DISPLAYS
+---compilation-defines=ENABLE_PHYSICS
+---compilation-defines=ENABLE_TEXTURE_STREAMING
+---compilation-defines=ENABLE_VIRTUALTEXTURING
+---compilation-defines=ENABLE_UNET
+---compilation-defines=ENABLE_LZMA
+---compilation-defines=ENABLE_UNITYEVENTS
+---compilation-defines=ENABLE_VR
+---compilation-defines=ENABLE_WEBCAM
+---compilation-defines=ENABLE_UNITYWEBREQUEST
+---compilation-defines=ENABLE_WWW
+---compilation-defines=ENABLE_CLOUD_SERVICES
+---compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB
+---compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS
+---compilation-defines=ENABLE_CLOUD_SERVICES_ADS
+---compilation-defines=ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+---compilation-defines=ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+---compilation-defines=ENABLE_CLOUD_SERVICES_PURCHASING
+---compilation-defines=ENABLE_CLOUD_SERVICES_ANALYTICS
+---compilation-defines=ENABLE_CLOUD_SERVICES_UNET
+---compilation-defines=ENABLE_CLOUD_SERVICES_BUILD
+---compilation-defines=ENABLE_CLOUD_LICENSE
+---compilation-defines=ENABLE_EDITOR_HUB_LICENSE
+---compilation-defines=ENABLE_WEBSOCKET_CLIENT
+---compilation-defines=ENABLE_DIRECTOR_AUDIO
+---compilation-defines=ENABLE_DIRECTOR_TEXTURE
+---compilation-defines=ENABLE_MANAGED_JOBS
+---compilation-defines=ENABLE_MANAGED_TRANSFORM_JOBS
+---compilation-defines=ENABLE_MANAGED_ANIMATION_JOBS
+---compilation-defines=ENABLE_MANAGED_AUDIO_JOBS
+---compilation-defines=ENABLE_MANAGED_UNITYTLS
+---compilation-defines=INCLUDE_DYNAMIC_GI
+---compilation-defines=ENABLE_SCRIPTING_GC_WBARRIERS
+---compilation-defines=PLATFORM_SUPPORTS_MONO
+---compilation-defines=RENDER_SOFTWARE_CURSOR
+---compilation-defines=ENABLE_VIDEO
+---compilation-defines=ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+---compilation-defines=PLATFORM_STANDALONE
+---compilation-defines=TEXTCORE_1_0_OR_NEWER
+---compilation-defines=PLATFORM_STANDALONE_WIN
+---compilation-defines=UNITY_STANDALONE_WIN
+---compilation-defines=UNITY_STANDALONE
+---compilation-defines=ENABLE_RUNTIME_GI
+---compilation-defines=ENABLE_MOVIES
+---compilation-defines=ENABLE_NETWORK
+---compilation-defines=ENABLE_NVIDIA
+---compilation-defines=ENABLE_CRUNCH_TEXTURE_COMPRESSION
+---compilation-defines=ENABLE_OUT_OF_PROCESS_CRASH_HANDLER
+---compilation-defines=ENABLE_CLUSTER_SYNC
+---compilation-defines=ENABLE_CLUSTERINPUT
+---compilation-defines=PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
+---compilation-defines=GFXDEVICE_WAITFOREVENT_MESSAGEPUMP
+---compilation-defines=ENABLE_WEBSOCKET_HOST
+---compilation-defines=ENABLE_MONO
+---compilation-defines=NET_STANDARD_2_0
+---compilation-defines=NET_STANDARD
+---compilation-defines=UNITY_PRO_LICENSE
+---compilation-defines=ENABLE_CUSTOM_RENDER_TEXTURE
+---compilation-defines=ENABLE_DIRECTOR
+---compilation-defines=ENABLE_LOCALIZATION
+---compilation-defines=ENABLE_SPRITES
+---compilation-defines=ENABLE_TERRAIN
+---compilation-defines=ENABLE_TILEMAP
+---compilation-defines=ENABLE_TIMELINE
+---compilation-defines=ENABLE_LEGACY_INPUT_MANAGER
+---compilation-defines=PACKAGE_PHYSICS
+---compilation-defines=PACKAGE_PHYSICS2D
+---compilation-defines=PACKAGE_TILEMAP
+---compilation-defines=PACKAGE_ANIMATION
+---compilation-defines=PACKAGE_UITOOLKIT
+---compilation-defines=CSHARP_7_OR_LATER
+---compilation-defines=CSHARP_7_3_OR_NEWER
+---compilation-defines=MODULE_AI_EXISTS
+---compilation-defines=MODULE_ANIMATION_EXISTS
+---compilation-defines=MODULE_PHYSICS_EXISTS
+---compilation-defines=MODULE_PHYSICS_2D_EXISTS
+---compilation-defines=MODULE_PARTICLE_SYSTEM_EXISTS
+---compilation-defines=ENABLE_ANIMATION_BURST
+---compilation-defines=CINEMACHINE_TIMELINE
+---compilation-defines=CINEMACHINE_PHYSICS_2D
+---compilation-defines=CINEMACHINE_PHYSICS
+---compilation-defines=CINEMACHINE_UGUI
+---compilation-defines=CINEMACHINE_PIXEL_PERFECT_2_0_3
+---compilation-defines=CINEMACHINE_UNITY_ANIMATION
+---compilation-defines=CINEMACHINE_UNITY_IMGUI
+---compilation-defines=TIMELINE_FRAMEACCURATE
+---compilation-defines=IS_TERRAIN_USED
+---compilation-defines=ENABLE_SPRITESHAPE_BURST
+---linker-options=PdbAltPath="MageSlinger_Data/Plugins/x86_64"
+---generate-link-xml=Temp\burst.link.xml
+---output=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Plugins\x86_64\lib_burst_generated
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Flow.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.CloudSave.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.State.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Core.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Authentication.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Burst.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Cinemachine.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\NavMeshPlus.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.CloudCode.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Scheduler.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Registration.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.PixelPerfect.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.InternalAPIEngineBridge.001.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
+---assembly-folder=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\
+---pdb-search-paths=Temp/ManagedSymbols/
+---method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
+---method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoSetCSRTrampoline(System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--da352d92cabf024fc9986011d52a4537
+---method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoGetCSRTrampoline()--89425a97f3f500fa810ad03f0c382542
+---method=Unity.Jobs.IJobExtensions+JobStruct`1[[UnityEngine.U2D.SpriteShapeGenerator, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.U2D.SpriteShapeGenerator&, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a185c62eba2497c95197140e5282b27a
+---platform=Windows
+---backend=burst-llvm-11
+---target=AVX2
+---global-safety-checks-setting=Off
+---dump=Function
+---float-precision=Standard
+---format=Coff
+---disable-warnings=BC1370
+---compilation-defines=UNITY_2021_3_4
+---compilation-defines=UNITY_2021_3
+---compilation-defines=UNITY_2021
+---compilation-defines=UNITY_5_3_OR_NEWER
+---compilation-defines=UNITY_5_4_OR_NEWER
+---compilation-defines=UNITY_5_5_OR_NEWER
+---compilation-defines=UNITY_5_6_OR_NEWER
+---compilation-defines=UNITY_2017_1_OR_NEWER
+---compilation-defines=UNITY_2017_2_OR_NEWER
+---compilation-defines=UNITY_2017_3_OR_NEWER
+---compilation-defines=UNITY_2017_4_OR_NEWER
+---compilation-defines=UNITY_2018_1_OR_NEWER
+---compilation-defines=UNITY_2018_2_OR_NEWER
+---compilation-defines=UNITY_2018_3_OR_NEWER
+---compilation-defines=UNITY_2018_4_OR_NEWER
+---compilation-defines=UNITY_2019_1_OR_NEWER
+---compilation-defines=UNITY_2019_2_OR_NEWER
+---compilation-defines=UNITY_2019_3_OR_NEWER
+---compilation-defines=UNITY_2019_4_OR_NEWER
+---compilation-defines=UNITY_2020_1_OR_NEWER
+---compilation-defines=UNITY_2020_2_OR_NEWER
+---compilation-defines=UNITY_2020_3_OR_NEWER
+---compilation-defines=UNITY_2021_1_OR_NEWER
+---compilation-defines=UNITY_2021_2_OR_NEWER
+---compilation-defines=UNITY_2021_3_OR_NEWER
+---compilation-defines=PLATFORM_ARCH_64
+---compilation-defines=UNITY_64
+---compilation-defines=USE_SEARCH_ENGINE_API
+---compilation-defines=USE_SEARCH_TABLE
+---compilation-defines=USE_SEARCH_MODULE
+---compilation-defines=USE_PROPERTY_DATABASE
+---compilation-defines=USE_SEARCH_EXTENSION_API
+---compilation-defines=SCENE_TEMPLATE_MODULE
+---compilation-defines=ENABLE_AR
+---compilation-defines=ENABLE_AUDIO
+---compilation-defines=ENABLE_CACHING
+---compilation-defines=ENABLE_CLOTH
+---compilation-defines=ENABLE_EVENT_QUEUE
+---compilation-defines=ENABLE_MICROPHONE
+---compilation-defines=ENABLE_MULTIPLE_DISPLAYS
+---compilation-defines=ENABLE_PHYSICS
+---compilation-defines=ENABLE_TEXTURE_STREAMING
+---compilation-defines=ENABLE_VIRTUALTEXTURING
+---compilation-defines=ENABLE_UNET
+---compilation-defines=ENABLE_LZMA
+---compilation-defines=ENABLE_UNITYEVENTS
+---compilation-defines=ENABLE_VR
+---compilation-defines=ENABLE_WEBCAM
+---compilation-defines=ENABLE_UNITYWEBREQUEST
+---compilation-defines=ENABLE_WWW
+---compilation-defines=ENABLE_CLOUD_SERVICES
+---compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB
+---compilation-defines=ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS
+---compilation-defines=ENABLE_CLOUD_SERVICES_ADS
+---compilation-defines=ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+---compilation-defines=ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+---compilation-defines=ENABLE_CLOUD_SERVICES_PURCHASING
+---compilation-defines=ENABLE_CLOUD_SERVICES_ANALYTICS
+---compilation-defines=ENABLE_CLOUD_SERVICES_UNET
+---compilation-defines=ENABLE_CLOUD_SERVICES_BUILD
+---compilation-defines=ENABLE_CLOUD_LICENSE
+---compilation-defines=ENABLE_EDITOR_HUB_LICENSE
+---compilation-defines=ENABLE_WEBSOCKET_CLIENT
+---compilation-defines=ENABLE_DIRECTOR_AUDIO
+---compilation-defines=ENABLE_DIRECTOR_TEXTURE
+---compilation-defines=ENABLE_MANAGED_JOBS
+---compilation-defines=ENABLE_MANAGED_TRANSFORM_JOBS
+---compilation-defines=ENABLE_MANAGED_ANIMATION_JOBS
+---compilation-defines=ENABLE_MANAGED_AUDIO_JOBS
+---compilation-defines=ENABLE_MANAGED_UNITYTLS
+---compilation-defines=INCLUDE_DYNAMIC_GI
+---compilation-defines=ENABLE_SCRIPTING_GC_WBARRIERS
+---compilation-defines=PLATFORM_SUPPORTS_MONO
+---compilation-defines=RENDER_SOFTWARE_CURSOR
+---compilation-defines=ENABLE_VIDEO
+---compilation-defines=ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+---compilation-defines=PLATFORM_STANDALONE
+---compilation-defines=TEXTCORE_1_0_OR_NEWER
+---compilation-defines=PLATFORM_STANDALONE_WIN
+---compilation-defines=UNITY_STANDALONE_WIN
+---compilation-defines=UNITY_STANDALONE
+---compilation-defines=ENABLE_RUNTIME_GI
+---compilation-defines=ENABLE_MOVIES
+---compilation-defines=ENABLE_NETWORK
+---compilation-defines=ENABLE_NVIDIA
+---compilation-defines=ENABLE_CRUNCH_TEXTURE_COMPRESSION
+---compilation-defines=ENABLE_OUT_OF_PROCESS_CRASH_HANDLER
+---compilation-defines=ENABLE_CLUSTER_SYNC
+---compilation-defines=ENABLE_CLUSTERINPUT
+---compilation-defines=PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
+---compilation-defines=GFXDEVICE_WAITFOREVENT_MESSAGEPUMP
+---compilation-defines=ENABLE_WEBSOCKET_HOST
+---compilation-defines=ENABLE_MONO
+---compilation-defines=NET_STANDARD_2_0
+---compilation-defines=NET_STANDARD
+---compilation-defines=UNITY_PRO_LICENSE
+---compilation-defines=ENABLE_CUSTOM_RENDER_TEXTURE
+---compilation-defines=ENABLE_DIRECTOR
+---compilation-defines=ENABLE_LOCALIZATION
+---compilation-defines=ENABLE_SPRITES
+---compilation-defines=ENABLE_TERRAIN
+---compilation-defines=ENABLE_TILEMAP
+---compilation-defines=ENABLE_TIMELINE
+---compilation-defines=ENABLE_LEGACY_INPUT_MANAGER
+---compilation-defines=PACKAGE_PHYSICS
+---compilation-defines=PACKAGE_PHYSICS2D
+---compilation-defines=PACKAGE_TILEMAP
+---compilation-defines=PACKAGE_ANIMATION
+---compilation-defines=PACKAGE_UITOOLKIT
+---compilation-defines=CSHARP_7_OR_LATER
+---compilation-defines=CSHARP_7_3_OR_NEWER
+---compilation-defines=MODULE_AI_EXISTS
+---compilation-defines=MODULE_ANIMATION_EXISTS
+---compilation-defines=MODULE_PHYSICS_EXISTS
+---compilation-defines=MODULE_PHYSICS_2D_EXISTS
+---compilation-defines=MODULE_PARTICLE_SYSTEM_EXISTS
+---compilation-defines=ENABLE_ANIMATION_BURST
+---compilation-defines=CINEMACHINE_TIMELINE
+---compilation-defines=CINEMACHINE_PHYSICS_2D
+---compilation-defines=CINEMACHINE_PHYSICS
+---compilation-defines=CINEMACHINE_UGUI
+---compilation-defines=CINEMACHINE_PIXEL_PERFECT_2_0_3
+---compilation-defines=CINEMACHINE_UNITY_ANIMATION
+---compilation-defines=CINEMACHINE_UNITY_IMGUI
+---compilation-defines=TIMELINE_FRAMEACCURATE
+---compilation-defines=IS_TERRAIN_USED
+---compilation-defines=ENABLE_SPRITESHAPE_BURST
+---linker-options=PdbAltPath="MageSlinger_Data/Plugins/x86_64"
+---generate-link-xml=Temp\burst.link.xml
+---output=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Plugins\x86_64\lib_burst_generated
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\UnityEngine.UI.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Flow.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.CloudSave.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.State.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Core.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Authentication.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Burst.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Cinemachine.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\NavMeshPlus.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.CloudCode.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Scheduler.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Registration.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.PixelPerfect.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.InternalAPIEngineBridge.001.dll
+---root-assembly=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
+---assembly-folder=D:\IUPUI\IU unityhub\Spellsling-Arena\Temp\StagingArea\Data\Managed\
+---pdb-search-paths=Temp/ManagedSymbols/
+---method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
+---method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoSetCSRTrampoline(System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--da352d92cabf024fc9986011d52a4537
+---method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoGetCSRTrampoline()--89425a97f3f500fa810ad03f0c382542
+---method=Unity.Jobs.IJobExtensions+JobStruct`1[[UnityEngine.U2D.SpriteShapeGenerator, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.U2D.SpriteShapeGenerator&, Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--a185c62eba2497c95197140e5282b27a
+-
+Index: ../../Player/.idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Player/.idea/encodings.xml b/../../Player/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1788974117434)
++++ b/../../Player/.idea/encodings.xml	(date 1788974117434)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise" />
++</project>
+\ No newline at end of file
+Index: ../../Player/.idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Player/.idea/.gitignore b/../../Player/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1788974123282)
++++ b/../../Player/.idea/.gitignore	(date 1788974123282)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Rider ignored files
++/modules.xml
++/contentModel.xml
++/projectSettingsUpdater.xml
++/.idea.Player.iml
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1788974356722)
++++ b/.idea/.gitignore	(date 1788974356722)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Rider ignored files
++/modules.xml
++/contentModel.xml
++/projectSettingsUpdater.xml
++/.idea.Ghost.iml
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1788974350766)
++++ b/.idea/encodings.xml	(date 1788974350766)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise" />
++</project>
+\ No newline at end of file
