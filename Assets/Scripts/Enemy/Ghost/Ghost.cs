@@ -1,7 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Ghost : MonoBehaviour
 {
+    [Header("Health / Damage")]
     public int health;
     public GameObject damage;
     public GameObject CurrentRoom;
@@ -9,298 +11,185 @@ public class Ghost : MonoBehaviour
     public GameObject heart;
     public GameObject damageEffect;
 
-
-    ////////////////////////////////////////////
-    ///PlayerAware values                    ///
-    ////////////////////////////////////////////
-    private Transform aim;
-    public bool Player { get; private set; }
+    [Header("Player Awareness")]
+    [SerializeField] public float playerAwarenessDistance = 8f;
+    public bool AwareOfPlayer { get; private set; }
     public Vector2 DirectionToPlayer { get; private set; }
-    [SerializeField]
-    public float AwareofPlayer;
-    private GameObject playertarget;
 
-    /////////////////////////////////////////////
-
-
-    ////////////////////////////////////////////
-    ///GoopMovement values                   ///
-    ////////////////////////////////////////////
+    [Header("Movement")]
     public Transform player;
-    public GameObject enemy;
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    //private float rotationSpeed = 100;
+    [SerializeField] private float speed = 4f;
     public Rigidbody2D rigidbody;
-    //private PlayerAware ThisPlayerAware;
     private Vector2 targetdirection;
-    public GameObject Goop;
+    public GameObject sprite;
     public GameObject anchor;
 
-    ////////////////////////////////////////////
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        ////////////////////////////////////////
-        ///PlayerAware Code
-        ////////////////////////////////////////
-        playertarget = GameObject.Find("target");
-        //print(playertarget);
-        player = playertarget.transform;
-
-
-        /////////////////////////////////////////
-        ///GoopMovement Code
-        /////////////////////////////////////////
-        ///print("awake");
-        player = GameObject.Find("Player");
-        player = player.transform;
-        anchor = GameObject.Find("EnemyAnchor");
-        rigidbody = GetComponent<Rigidbody2D>();
-        //ThisPlayerAware = GetComponent<PlayerAware>();
-        
-        speed = 4f;
+        if (rigidbody == null)
+            rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        Vector2 enemyToPlayerVector = player.position - transform.position;
-        DirectionToPlayer = enemyToPlayerVector;
-
-        //print(enemyToPlayerVector);
-        //print(enemyToPlayerVector.magnitude);
-        
-        if (enemyToPlayerVector.magnitude <= playerAwarenessDistance)
+        if (player == null)
         {
-            //print("Found player");
-            AwareOfPlayer = true;
+            GameObject playerObject = GameObject.Find("Player");
+            if (playerObject != null)
+                player = playerObject.transform;
+            else
+                Debug.LogError($"{name}: Could not find a GameObject named 'Player'.", this);
         }
-        else
+
+        if (anchor == null)
+            anchor = GameObject.Find("EnemyAnchor");
+
+        if (anchor == null)
+            Debug.LogWarning($"{name}: Could not find 'EnemyAnchor'. Assign Anchor in the Inspector.", this);
+
+        if (sprite == null)
+            Debug.LogWarning($"{name}: Sprite is not assigned.", this);
+    }
+
+    private void Update()
+    {
+        if (player == null)
         {
-            //print("Lost player");
             AwareOfPlayer = false;
+            DirectionToPlayer = Vector2.zero;
+            return;
         }
+
+        Vector2 enemyToPlayerVector = (Vector2)player.position - (Vector2)transform.position;
+        DirectionToPlayer = enemyToPlayerVector;
+        AwareOfPlayer = enemyToPlayerVector.magnitude <= playerAwarenessDistance;
     }
 
-
-    ///////////////////////////////////////////////
-    /// player Damage check
-    ///////////////////////////////////////////////
-
-    public void HurtMe(int damage)
-    {
-        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
-
-        health -= damage;
-        if (health <= 0)
-        {
-            int heartOrNo = Random.Range(0, 4);
-
-            print(heartOrNo);
-            //Instantiate (heart, this.transform.position, Quaternion.identity);
-
-            if (heartOrNo >= 2)
-            {
-                Instantiate(heart, this.transform.position, Quaternion.identity);
-            }
-
-            Destroy(this.gameObject);
-            CurrentRoom.gameObject.SendMessage("RoomClear");
-        }
-    }
-
-
-    public void LightningHurtMe(int ouchie)
-    {
-        health -= ouchie + 1;
-        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
-
-        if (health <= 0)
-        {
-            int heartOrNo = Random.Range(0, 4);
-
-            print(heartOrNo);
-            //Instantiate (heart, this.transform.position, Quaternion.identity);
-
-            if (heartOrNo >= 2)
-            {
-                Instantiate(heart, this.transform.position, Quaternion.identity);
-            }
-
-            Destroy(this.gameObject);
-            CurrentRoom.gameObject.SendMessage("RoomClear");
-        }
-    }
-
-    public void FireHurtMe(int ouchie)
-    {
-        health -= ouchie;
-        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
-
-        if (health <= 0)
-        {
-            int heartOrNo = Random.Range(0, 4);
-
-            print(heartOrNo);
-            //Instantiate (heart, this.transform.position, Quaternion.identity);
-
-            if (heartOrNo >= 2)
-            {
-                Instantiate(heart, this.transform.position, Quaternion.identity);
-            }
-
-            Destroy(this.gameObject);
-            CurrentRoom.gameObject.SendMessage("RoomClear");
-        }
-    }
-
-    public void IceHurtMe(int ouchie)
-    {
-        health -= ouchie;
-        Instantiate(damageEffect, this.transform.position, this.transform.rotation);
-
-        if (health <= 0)
-        {
-            int heartOrNo = Random.Range(0, 4);
-
-            print(heartOrNo);
-            //Instantiate (heart, this.transform.position, Quaternion.identity);
-
-            if (heartOrNo >= 2)
-            {
-                Instantiate(heart, this.transform.position, Quaternion.identity);
-            }
-
-            Destroy(this.gameObject);
-            CurrentRoom.gameObject.SendMessage("RoomClear");
-        }
-    }
-
-    public void EarthHurtMe(int ouchie)
-    {
-
-        if (health <= 0)
-        {
-            int heartOrNo = Random.Range(0, 4);
-
-            print(heartOrNo);
-            //Instantiate (heart, this.transform.position, Quaternion.identity);
-
-            if (heartOrNo >= 2)
-            {
-                Instantiate(heart, this.transform.position, Quaternion.identity);
-            }
-
-            Destroy(this.gameObject);
-            CurrentRoom.gameObject.SendMessage("RoomClear");
-        }
-    }
-
-    public void OnTriggerEnter2D( Collider2D other)
-    {
-        
-        if(other.gameObject.CompareTag("Fire"))
-        { 
-            Destroy(other.gameObject);
-            HurtMe(1);
-            GameObject explo = Instantiate(damage, this.transform.position, Quaternion.identity);
-            Destroy(explo, 1f);
-            
-            
-        }
-        if(other.gameObject.CompareTag("FILLERTEXT"))
-        { 
-                        
-            if(health <= 0)
-                {  
-                    Destroy(this.gameObject);   
-                }
-        }
-        if(other.gameObject.CompareTag("Earth"))
-        {
-
-        }
-        if(other.gameObject.CompareTag("Lightning"))
-        {
-            Destroy(other.gameObject);     
-        }
-        if(other.gameObject.CompareTag("Ice"))
-        {
-            Destroy(other.gameObject);     
-        }
-
-        if(other.gameObject.CompareTag("Player"))
-        {
-           
-            
-            animator.Play("GoopAttack");
-            
-            //other.gameObject.SendMessage("EnemyCollide");
-            
-
-        }
-    }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdateTargetDirection();
         RotateTowardsTarget();
         SetVelocity();
-        sprite.transform.rotation = anchor.transform.rotation;
-        
+
+        if (sprite != null && anchor != null)
+            sprite.transform.rotation = anchor.transform.rotation;
     }
 
     private void UpdateTargetDirection()
     {
-        //print("UpdateTargetDirection");
-        if (AwareOfPlayer)
-        {
-            targetdirection = DirectionToPlayer;
-        }
-        else
-        {
-            targetdirection = Vector2.zero;
-        }
-        //print("target direction = " + targetdirection);
-
+        targetdirection = AwareOfPlayer ? DirectionToPlayer : Vector2.zero;
     }
 
     private void RotateTowardsTarget()
     {
-        //print("RotateTowardsTarget");
-        if (targetdirection == Vector2.zero)
-        {
-            //print("targetdirection == Vector2.zero");
+        if (targetdirection == Vector2.zero || rigidbody == null || sprite == null)
             return;
-        }
 
-        // Quaternion targetRotation = Quaternion.LookRotation(transform.foward, targetdirection);
-        //Quaternion rotation = Quaternion.RotateTowards(player.transform.rotation, targetdirection, rotationSpeed* Time.deltaTime);
-        //rigidbody.transform.rotation = player.transform.rotation;
         rigidbody.transform.rotation = sprite.transform.rotation;
     }
 
     private void SetVelocity()
     {
-        //print("SetVelocity");
-        if (targetdirection == Vector2.zero)
+        if (rigidbody == null)
+            return;
+
+        rigidbody.velocity =
+            targetdirection == Vector2.zero
+                ? Vector2.zero
+                : (Vector2)transform.up * speed;
+    }
+
+    public void HurtMe(int damageAmount)
+    {
+        SpawnDamageEffect();
+        health -= damageAmount;
+        CheckForDeath();
+    }
+
+    public void LightningHurtMe(int damageAmount)
+    {
+        SpawnDamageEffect();
+        health -= damageAmount + 1;
+        CheckForDeath();
+    }
+
+    public void FireHurtMe(int damageAmount)
+    {
+        SpawnDamageEffect();
+        health -= damageAmount;
+        CheckForDeath();
+    }
+
+    public void IceHurtMe(int damageAmount)
+    {
+        SpawnDamageEffect();
+        health -= damageAmount;
+        CheckForDeath();
+    }
+
+    public void EarthHurtMe(int damageAmount)
+    {
+        SpawnDamageEffect();
+        health -= damageAmount;
+        CheckForDeath();
+    }
+
+    private void SpawnDamageEffect()
+    {
+        if (damageEffect != null)
+            Instantiate(damageEffect, transform.position, transform.rotation);
+    }
+
+    private void CheckForDeath()
+    {
+        if (health > 0)
+            return;
+
+        int heartOrNo = Random.Range(0, 4);
+
+        if (heart != null && heartOrNo >= 2)
+            Instantiate(heart, transform.position, Quaternion.identity);
+
+        if (CurrentRoom != null)
+            CurrentRoom.SendMessage("RoomClear", SendMessageOptions.DontRequireReceiver);
+
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fire"))
         {
-            //print("no direction");
-            this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            
+            Destroy(other.gameObject);
+            HurtMe(1);
+
+            if (damage != null)
+            {
+                GameObject explosion = Instantiate(damage, transform.position, Quaternion.identity);
+                Destroy(explosion, 1f);
+            }
+
+            return;
         }
-        else
+
+        if (other.CompareTag("FILLERTEXT"))
         {
-            this.GetComponent<Rigidbody2D>().velocity = transform.up * speed;
-            //this.GetComponent<Rigidbody2D>().AddForce(transform.up * speed);
-            //print("transform.up = " + this.transform.up);
-            //print("transform.up = " + transform.up);
-            //print("speed = " + speed);
-           // print("velocty = " + this.GetComponent<Rigidbody2D>().velocity);
-            //print("velocty should be = " + transform.up * speed);
+            if (health <= 0)
+                Destroy(gameObject);
+
+            return;
         }
+
+        if (other.CompareTag("Lightning") || other.CompareTag("Ice"))
+        {
+            Destroy(other.gameObject);
+            return;
+        }
+
+        if (other.CompareTag("Earth"))
+            return;
+
+        if (other.CompareTag("Player") && animator != null)
+            animator.Play("GoopAttack");
     }
 }

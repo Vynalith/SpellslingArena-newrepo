@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shooter : MonoBehaviour
 {
     public float speed;
 
-    Vector2 movement;
-    public Rigidbody2D rb;
     public GameObject player;
 
     public Transform ShooterThing;
@@ -70,6 +69,57 @@ public class Shooter : MonoBehaviour
     private Vector2 shooterthingpos;
 
 
+    [Header("Input System")]
+    [Tooltip("Assign the Lightning action from SpellInputs.")]
+    [SerializeField] private InputActionReference lightningAction;
+    [Tooltip("Assign the Fire element-selection action from SpellInputs.")]
+    [SerializeField] private InputActionReference fireAction;
+    [Tooltip("Assign the Ice action from SpellInputs.")]
+    [SerializeField] private InputActionReference iceAction;
+    [Tooltip("Assign the Earth action from SpellInputs.")]
+    [SerializeField] private InputActionReference earthAction;
+    [Tooltip("Assign the primary attack / left-click action.")]
+    [SerializeField] private InputActionReference primaryAttackAction;
+    [Tooltip("Assign the secondary attack / right-click action.")]
+    [SerializeField] private InputActionReference secondaryAttackAction;
+
+    private void OnEnable()
+    {
+        EnableAction(lightningAction);
+        EnableAction(fireAction);
+        EnableAction(iceAction);
+        EnableAction(earthAction);
+        EnableAction(primaryAttackAction);
+        EnableAction(secondaryAttackAction);
+    }
+
+    private void OnDisable()
+    {
+        DisableAction(lightningAction);
+        DisableAction(fireAction);
+        DisableAction(iceAction);
+        DisableAction(earthAction);
+        DisableAction(primaryAttackAction);
+        DisableAction(secondaryAttackAction);
+    }
+
+    private static void EnableAction(InputActionReference actionReference)
+    {
+        actionReference?.action?.Enable();
+    }
+
+    private static void DisableAction(InputActionReference actionReference)
+    {
+        actionReference?.action?.Disable();
+    }
+
+    private static bool WasPressed(InputActionReference actionReference)
+    {
+        return actionReference != null &&
+               actionReference.action != null &&
+               actionReference.action.WasPressedThisFrame();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,7 +138,8 @@ public class Shooter : MonoBehaviour
         earthReady = true;
 
 
-        gameUI.SendMessage("LightningCooldown", 3f); //cause you shot the duck
+        if (gameUI != null)
+            gameUI.SendMessage("LightningCooldown", 3f, SendMessageOptions.DontRequireReceiver); //cause you shot the duck
 
     }
 
@@ -101,15 +152,13 @@ public class Shooter : MonoBehaviour
     public void Win()
     {
         Playing=false;
-        Aim.gameObject.SetActive(false);
+        if (Aim != null)
+            Aim.SetActive(false);
     }
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-
-          if( Input.GetButtonDown("lightning"))
+          if( WasPressed(lightningAction))
         {
            Projectile = lightningmagic;
            lightning = true;
@@ -123,7 +172,7 @@ public class Shooter : MonoBehaviour
             shotForce = 20f;
            
         }
-        if( Input.GetButtonDown("fire"))
+        if( WasPressed(fireAction))
         {
             Projectile = firemagic;
             Projectile2 = firemagic2;
@@ -135,7 +184,7 @@ public class Shooter : MonoBehaviour
 
              shotForce = 20f;
         }
-         if( Input.GetButtonDown("ice"))
+         if( WasPressed(iceAction))
         {
             Projectile = icemagic;
             Projectile2 = icemagic2;
@@ -149,7 +198,7 @@ public class Shooter : MonoBehaviour
             shotForce2 = 0f;
             
         }
-         if( Input.GetButtonDown("earth"))
+         if( WasPressed(earthAction))
         {
             Projectile = earthmagic;
             Projectile2 = earthmagic2;
@@ -164,7 +213,7 @@ public class Shooter : MonoBehaviour
 
 
         //attack
-        if( Input.GetButtonDown("Fire2"))
+        if( WasPressed(primaryAttackAction))
         {
             //print ("M1");
              if(Playing==true)
@@ -173,7 +222,7 @@ public class Shooter : MonoBehaviour
             }
         }
 
-            if( Input.GetButtonDown("M2"))
+            if( WasPressed(secondaryAttackAction))
         {
             //print ("M2");
              if(Playing==true)
@@ -403,4 +452,3 @@ public class Shooter : MonoBehaviour
         player.SendMessage("HurtMe", 1);
     }
 }
-
