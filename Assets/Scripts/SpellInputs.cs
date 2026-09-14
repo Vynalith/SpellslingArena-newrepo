@@ -4,7 +4,9 @@ using UnityEngine.InputSystem;
 public sealed class SpellInputs : IDisposable
 {
     private readonly InputActionMap playerMap;
-
+    private readonly InputActionType AddAction;
+    private readonly InputActionType expectActionType;
+    private readonly InputActionType expectControlType;
     private readonly InputAction move;
     private readonly InputAction aim;
 
