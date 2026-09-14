@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 public sealed class SpellInputs : IDisposable
 {
     private readonly InputActionMap playerMap;
-    private readonly InputActionType AddAction;
-    private readonly InputActionType expectActionType;
-    private readonly InputActionType expectControlType;
     private readonly InputAction move;
     private readonly InputAction aim;
 
@@ -29,8 +26,7 @@ public sealed class SpellInputs : IDisposable
         // ------------------------------------------------------------
         move = playerMap.AddAction(
             name: "Move",
-            type: InputActionType.Value,
-            expectedControlType: "Vector2");
+            type: InputActionType.Value);
 
         move.AddCompositeBinding("2DVector")
             .With("Up", "<Keyboard>/w")
@@ -51,8 +47,7 @@ public sealed class SpellInputs : IDisposable
         // ------------------------------------------------------------
         aim = playerMap.AddAction(
             name: "Aim",
-            type: InputActionType.PassThrough,
-            expectedControlType: "Vector2");
+            type: InputActionType.PassThrough);
 
         aim.AddBinding("<Pointer>/position");
 
