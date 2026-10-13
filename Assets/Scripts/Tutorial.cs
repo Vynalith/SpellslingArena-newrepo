@@ -39,7 +39,7 @@ public class Tutorial : MonoBehaviour
     {
         move=true;
         allowinput=false;
-        tutorialNum=0;
+        tutorialNum= bool;
         nextQuack = true;
         isScreaming = true; //just internally for now
     }
