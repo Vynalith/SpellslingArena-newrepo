@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public GameObject gameUI;
 
     [Header("Gameplay")]
-    public GameObject Shooter;
+    public GameObject PlayerShooter;
     public int element = 1;
 
     [Header("Input System")]
