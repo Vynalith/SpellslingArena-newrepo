@@ -10,9 +10,7 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a35e013b-1f60-48f8-9c70-fd81b1bb80c8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Player.cs" afterDir="false" />
-    </list>
+    <list default="true" id="a35e013b-1f60-48f8-9c70-fd81b1bb80c8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +74,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#"
+    "settings.editor.selected.configurable": "preferences.build.unityPlugin"
   },
   "keyToStringList": {
     "GitStage.ChangesTree.GroupingKeys": [
@@ -103,6 +101,8 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Player.cs script fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Player.cs script fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
